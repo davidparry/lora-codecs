@@ -9,7 +9,7 @@ jobs:
       # specify the version you desire here
       - image: gradle:jdk12
 
-    working_directory: /tmp
+    working_directory: ~/repo
 
     environment:
       # Customize the JVM maximum heap limit
