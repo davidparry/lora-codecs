@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!DOCTYPE suppressions PUBLIC
+        "-//Puppy Crawl//DTD Check Configuration 1.1//EN"
+        "http://checkstyle.sourceforge.net/dtds/suppressions_1_1.dtd">
+
+<suppressions>
+    <suppress checks="[a-zA-Z0-9]*" files="Test"/>
+    <suppress checks="JavadocPackage" files="com[\\/]firstaware[\\/]ic[\\/]"/>
+
+</suppressions>
