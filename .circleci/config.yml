@@ -39,8 +39,6 @@ jobs:
       - run:
           name: Store Build output
           command: |
-            mdkir /tmp/artifacts;
-            cp /build /tmp/artifacts;
             echo "Completed copy now storing all tmp"
       - store_artifacts:
-          path: /tmp
+          path: /build
