@@ -6,7 +6,6 @@ import com.davidparry.lora.codec.internal.sensor.Digital
 import com.davidparry.lora.codec.internal.sensor.Humidity
 import com.davidparry.lora.codec.internal.sensor.Temperature
 import org.apache.commons.codec.binary.Base64
-import org.lorawan.codec.internal.sensor.*
 import spock.lang.Shared
 import spock.lang.Specification
 import spock.lang.Unroll
