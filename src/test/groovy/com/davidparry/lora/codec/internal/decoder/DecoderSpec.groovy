@@ -1,5 +1,8 @@
 package com.davidparry.lora.codec.internal.decoder
 
+import com.davidparry.lora.codec.CayenneType
+import com.davidparry.lora.codec.internal.ByteArrayPayloadReaderReader
+import com.davidparry.lora.codec.internal.PayloadReader
 import com.davidparry.lora.codec.internal.sensor.Analog
 import com.davidparry.lora.codec.internal.sensor.Counter
 import com.davidparry.lora.codec.internal.sensor.Digital
@@ -13,8 +16,18 @@ import spock.lang.Unroll
 import static com.davidparry.lora.codec.tektelic.TektelicHomeRegister.*
 
 class DecoderSpec extends Specification {
+    //unkown pXVFeg==
     @Shared
     byte[] reedCounterTrueSwitch = Base64.decodeBase64("AQD/CAQAAQ==")
+
+    @Shared
+    byte[] reedSwitchCounter = Base64.decodeBase64("AQAACAQAAQ==")
+
+    //Sa,ple 02  THreshhold 64 enabled 00
+    @Shared
+    byte[] mdReadResponse = Base64.decodeBase64("WgJbZFwA")
+
+    //WgJbZFwA
 
     @Shared
     DataTypeValidator validator = Mock(DataTypeValidator)
@@ -26,7 +39,7 @@ class DecoderSpec extends Specification {
         given:
         DigitalDecoder decoder = new DigitalDecoder(new DataTypeByteValidator())
         CounterDecoder counterDecoder = new CounterDecoder(new DataTypeByteValidator())
-        com.davidparry.lora.codec.internal.PayloadReader payloadReader = new com.davidparry.lora.codec.internal.ByteArrayPayloadReaderReader()
+        PayloadReader payloadReader = new ByteArrayPayloadReaderReader()
 
         when:
         // more in the data the ReedSwitch and Count
@@ -48,11 +61,38 @@ class DecoderSpec extends Specification {
 
     }
 
+    def "for single pass of data with both Reed Switch FF and Reed Count 01"() {
+        given:
+        DigitalDecoder decoder = new DigitalDecoder(new DataTypeByteValidator())
+        CounterDecoder counterDecoder = new CounterDecoder(new DataTypeByteValidator())
+        PayloadReader payloadReader = new ByteArrayPayloadReaderReader()
+
+        when:
+        // more in the data the ReedSwitch and Count
+        payloadReader.load(reedSwitchCounter)
+        // increment acting like we read the channel to get the decoder and dataType
+        payloadReader.read()
+        Digital sensor = decoder.decode(payloadReader, MAGNETIC_SWITCH)
+        payloadReader.read()
+        Counter counter = counterDecoder.decode(payloadReader, MAGNETIC_SWITCH_COUNT)
+
+        then:
+        _ * validator.validate(_, _)
+        sensor == reedSwitch
+        counter == reedCount
+
+        where:
+        payload               | reedSwitch                      | reedCount
+        reedCounterTrueSwitch | new Digital(MAGNETIC_SWITCH, 0) | new Counter(MAGNETIC_SWITCH_COUNT, 1)
+
+    }
+
+
     @Unroll
     def "for single byte decoder #tester using command #llp  #outcome byteValue #readValue"() {
         given:
-        com.davidparry.lora.codec.internal.PayloadReader<Byte, byte[]> reader = Mock(com.davidparry.lora.codec.internal.PayloadReader)
-        com.davidparry.lora.codec.CayenneType type = Mock(com.davidparry.lora.codec.CayenneType)
+        PayloadReader<Byte, byte[]> reader = Mock(PayloadReader)
+        CayenneType type = Mock(CayenneType)
 
         when:
         Decoder decoder = tester
@@ -72,8 +112,8 @@ class DecoderSpec extends Specification {
     @Unroll
     def "for 2 byte decoder tester using command #llp #outcome byteOne #readOne byteTwo #readTwo"() {
         given:
-        com.davidparry.lora.codec.internal.PayloadReader<Byte, byte[]> reader = Mock(com.davidparry.lora.codec.internal.PayloadReader)
-        com.davidparry.lora.codec.CayenneType type = Mock(com.davidparry.lora.codec.CayenneType)
+        PayloadReader<Byte, byte[]> reader = Mock(PayloadReader)
+        CayenneType type = Mock(CayenneType)
 
         when:
         Decoder decoder = tester

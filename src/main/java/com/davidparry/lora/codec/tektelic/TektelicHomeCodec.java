@@ -28,4 +28,9 @@ public class TektelicHomeCodec implements Codec<byte[]> {
         }
         return builder.build();
     }
+
+    @Override
+    public String encode(Command command) {
+        return null;
+    }
 }
