@@ -14,7 +14,7 @@ public interface CayenneType {
 
     boolean isSigned();
 
-    SensorType getKey();
+    SensorKey getKey();
 
     String getLabel();
 

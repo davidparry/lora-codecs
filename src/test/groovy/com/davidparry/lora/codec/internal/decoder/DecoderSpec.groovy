@@ -16,18 +16,19 @@ import spock.lang.Unroll
 import static com.davidparry.lora.codec.tektelic.TektelicHomeRegister.*
 
 class DecoderSpec extends Specification {
-    //unkown pXVFeg==
+    //unkown pXVFeg==  <-- need to get back feedback on it
     @Shared
     byte[] reedCounterTrueSwitch = Base64.decodeBase64("AQD/CAQAAQ==")
 
     @Shared
     byte[] reedSwitchCounter = Base64.decodeBase64("AQAACAQAAQ==")
 
-    //Sa,ple 02  THreshhold 64 enabled 00
+    //Sample 02  Threshhold 64 enabled 00
     @Shared
     byte[] mdReadResponse = Base64.decodeBase64("WgJbZFwA")
 
-    //WgJbZFwA
+    @Shared
+    byte[] tempRHVoltage = Base64.decodeBase64("A2cBBwRocQD/AS8=")
 
     @Shared
     DataTypeValidator validator = Mock(DataTypeValidator)
@@ -87,6 +88,57 @@ class DecoderSpec extends Specification {
 
     }
 
+    def "for single pass of data temperature RH and voltage"() {
+        given:
+        TemperatureDecoder temperature = new TemperatureDecoder(new DataTypeByteValidator())
+        HumidityDecoder humidityDecoder = new HumidityDecoder(new DataTypeByteValidator())
+        AnalogVoltageDecoder voltageDecoder = new AnalogVoltageDecoder(new DataTypeByteValidator())
+        PayloadReader payloadReader = new ByteArrayPayloadReaderReader()
+
+        when:
+        // more in the data temp than RH then Voltage
+        payloadReader.load(tempRHVoltage)
+        // increment acting like we read the channel to get the decoder and dataType
+        payloadReader.read()
+        Temperature temp = temperature.decode(payloadReader, TEMPERATURE)
+        payloadReader.read()
+        Humidity humidity = humidityDecoder.decode(payloadReader, HUMIDITY)
+        payloadReader.read()
+        Analog analog = voltageDecoder.decode(payloadReader, BATTERY_VOLTAGE)
+
+
+        then:
+        _ * validator.validate(_, _)
+        temp == new Temperature(TEMPERATURE, 26.3)
+        humidity == new Humidity(HUMIDITY, 56.5)
+        analog == new Analog(BATTERY_VOLTAGE, 3.03)
+
+    }
+
+
+    def "for single pass of data to read the moisture settings on the device"() {
+        given:
+        MoistureTransducerDecoder decoder = new MoistureTransducerDecoder()
+        PayloadReader payloadReader = new ByteArrayPayloadReaderReader()
+
+        when:
+        // more in the data the sample period , Threshold, enable/disable
+        payloadReader.load(mdReadResponse)
+        // increment acting like we read the channel to get the decoder and dataType
+        payloadReader.read()
+        Digital sp = decoder.decode(payloadReader, SAMPLE_PERIOD)
+        payloadReader.read()
+        Digital threshold = decoder.decode(payloadReader, MD_THRESHOLD)
+        payloadReader.read()
+        Digital state = decoder.decode(payloadReader, MD_STATE)
+
+        then:
+        _ * validator.validate(_, _)
+        sp == new Digital(SAMPLE_PERIOD, 2)
+        threshold == new Digital(MD_THRESHOLD, 100)
+        state == new Digital(MD_STATE, 0)
+
+    }
 
     @Unroll
     def "for single byte decoder #tester using command #llp  #outcome byteValue #readValue"() {

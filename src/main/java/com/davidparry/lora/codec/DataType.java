@@ -16,7 +16,7 @@ public final class DataType implements CayenneType {
 
     private boolean signed;
 
-    private SensorType key;
+    private SensorKey key;
 
     private String label;
 
@@ -96,7 +96,7 @@ public final class DataType implements CayenneType {
         return signed;
     }
 
-    public SensorType getKey() {
+    public SensorKey getKey() {
         return key;
     }
 
@@ -116,7 +116,7 @@ public final class DataType implements CayenneType {
         private String channelX;
         private int size;
         private boolean signed;
-        private SensorType key;
+        private SensorKey key;
         private String label;
         private int deciPos;
 
@@ -153,7 +153,7 @@ public final class DataType implements CayenneType {
             return this;
         }
 
-        public Builder withKey(SensorType val) {
+        public Builder withKey(SensorKey val) {
             key = val;
             return this;
         }

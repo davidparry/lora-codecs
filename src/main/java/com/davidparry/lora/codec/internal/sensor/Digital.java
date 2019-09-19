@@ -7,26 +7,24 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
 /**
- * 1 for true and 0 for false
- * reported in hex as 0xFF truth 0x00 for false etc...
+ *
  */
 public class Digital extends BaseSensor implements Sensor<Integer> {
-    private Integer flag;
+    private Integer value;
 
     /**
-     * 1 true and 0 is false wire returned either a (0x00 false 0)  (0xFF true 1)
      *
      * @param dataType
-     * @param flag
+     * @param value
      */
-    public Digital(CayenneType dataType, Integer flag) {
+    public Digital(CayenneType dataType, Integer value) {
         super(dataType);
-        this.flag = flag;
+        this.value = value;
     }
 
     @Override
     public Integer getValue() {
-        return this.flag;
+        return this.value;
     }
 
     @Override
@@ -34,18 +32,18 @@ public class Digital extends BaseSensor implements Sensor<Integer> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Digital digital = (Digital) o;
-        return Objects.equals(flag, digital.flag);
+        return Objects.equals(value, digital.value);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(flag);
+        return Objects.hash(value);
     }
 
     @Override
     public String toString() {
         return new StringJoiner(", ", Digital.class.getSimpleName() + "[", "]")
-                .add("flag=" + flag)
+                .add("value=" + value)
                 .toString();
     }
 }

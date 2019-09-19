@@ -28,6 +28,9 @@ public class TektelicHomeRegisterImpl implements TektelicHomeRegister {
         dataTypes.put(HUMIDITY.getChannel(), HUMIDITY);
         dataTypes.put(LIGHT_DETECTION.getChannel(), LIGHT_DETECTION);
         dataTypes.put(MAGNETIC_SWITCH.getChannel(), MAGNETIC_SWITCH);
+        dataTypes.put(SAMPLE_PERIOD.getChannel(), SAMPLE_PERIOD);
+        dataTypes.put(MD_THRESHOLD.getChannel(), MD_THRESHOLD);
+        dataTypes.put(MD_STATE.getChannel(), MD_STATE);
     }
 
     private static void initDecoders() {
@@ -42,6 +45,9 @@ public class TektelicHomeRegisterImpl implements TektelicHomeRegister {
         decoders.put(MCU_TEMP.getChannel(), TEMP_DECODER);
         decoders.put(EXTERNAL_INPUT.getChannel(), DIGITAL_DECODER);
         decoders.put(EXTERNAL_INPUT_COUNT.getChannel(), COUNTER_DECODER);
+        decoders.put(SAMPLE_PERIOD.getChannel(), MD_TRANS_DECODER);
+        decoders.put(MD_THRESHOLD.getChannel(), MD_TRANS_DECODER);
+        decoders.put(MD_STATE.getChannel(), MD_TRANS_DECODER);
     }
 
     public Decoder decoder(byte channel) {
