@@ -1,1 +1,1 @@
-# Lora Codes
+# Lora Codecs
