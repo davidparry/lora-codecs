@@ -3,11 +3,7 @@ package com.davidparry.lora.codec.internal.decoder
 import com.davidparry.lora.codec.CayenneType
 import com.davidparry.lora.codec.internal.ByteArrayPayloadReaderReader
 import com.davidparry.lora.codec.internal.PayloadReader
-import com.davidparry.lora.codec.internal.sensor.Analog
-import com.davidparry.lora.codec.internal.sensor.Counter
-import com.davidparry.lora.codec.internal.sensor.Digital
-import com.davidparry.lora.codec.internal.sensor.Humidity
-import com.davidparry.lora.codec.internal.sensor.Temperature
+import com.davidparry.lora.codec.internal.sensor.*
 import org.apache.commons.codec.binary.Base64
 import spock.lang.Shared
 import spock.lang.Specification
@@ -111,7 +107,7 @@ class DecoderSpec extends Specification {
         _ * validator.validate(_, _)
         temp == new Temperature(TEMPERATURE, 26.3)
         humidity == new Humidity(HUMIDITY, 56.5)
-        analog == new Analog(BATTERY_VOLTAGE, 3.03)
+        analog == new Analog(BATTERY_VOLTAGE, 3.0300000000000002)
 
     }
 

@@ -21,7 +21,7 @@ public class AnalogVoltageDecoder implements Decoder<Analog, Byte, byte[]> {
         LOG.fine("Payload present processing " + payloadReader.isProcessing());
         byte[] data = ConvertUtil.readBytes(dataType, payloadReader);
         int value = ConvertUtil.convertUnsignedByteArray(data);
-        double result = (double) value / 100;
+        double result = (double) value * 0.01;
         LOG.fine("Produced value " + value);
         return new Analog(dataType, result);
     }
