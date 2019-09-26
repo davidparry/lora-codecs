@@ -5,6 +5,7 @@ import com.davidparry.lora.codec.Sensor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 
 public final class PayloadResult implements Payload {
 
@@ -26,6 +27,13 @@ public final class PayloadResult implements Payload {
 
     public List<Sensor> getSensors() {
         return sensors;
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", PayloadResult.class.getSimpleName() + "[", "]")
+                .add("sensors=" + sensors)
+                .toString();
     }
 
     @SuppressWarnings("PMD.AvoidFieldNameMatchingMethodName")
