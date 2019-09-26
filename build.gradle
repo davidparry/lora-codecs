@@ -1,3 +1,12 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.8.0'
+    }
+}
+
 plugins {
     id 'java'
     id "com.github.spotbugs" version "2.0.0"
@@ -7,6 +16,8 @@ plugins {
     id 'idea'
     id 'groovy'
 }
+apply plugin: "com.vanniktech.maven.publish"
+
 apply from: "${projectDir}/gradle/static-analysis.gradle"
 
 repositories {
@@ -30,3 +41,5 @@ dependencies {
     testImplementation group: 'commons-codec', name: 'commons-codec', version: '1.12'
 
 }
+
+

@@ -3,6 +3,10 @@ package com.davidparry.lora.codec.internal;
 import java.util.Arrays;
 import java.util.StringJoiner;
 
+/**
+ * This class is not meant to be ThreadSafe create new instances for each time you want to consume the Payload is
+ * the preferred way.
+ */
 public class ByteArrayPayloadReaderReader implements PayloadReader<Byte, byte[]> {
     private byte[] payload;
     private int position = -1;
@@ -18,6 +22,7 @@ public class ByteArrayPayloadReaderReader implements PayloadReader<Byte, byte[]>
     @Override
     public void load(byte[] data) {
         this.payload = data;
+        this.position = -1;
     }
 
     @Override
