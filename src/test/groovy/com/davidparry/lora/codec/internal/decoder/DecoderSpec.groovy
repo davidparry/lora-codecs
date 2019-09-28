@@ -5,9 +5,12 @@ import com.davidparry.lora.codec.internal.ByteArrayPayloadReaderReader
 import com.davidparry.lora.codec.internal.PayloadReader
 import com.davidparry.lora.codec.internal.sensor.*
 import org.apache.commons.codec.binary.Base64
+import org.apache.commons.codec.binary.Hex
 import spock.lang.Shared
 import spock.lang.Specification
 import spock.lang.Unroll
+
+import java.util.zip.CRC32
 
 import static com.davidparry.lora.codec.tektelic.TektelicHomeRegister.*
 
@@ -30,7 +33,14 @@ class DecoderSpec extends Specification {
     DataTypeValidator validator = Mock(DataTypeValidator)
 
     def setup() {
+
+
+
+
+
     }
+
+
 
     def "for single pass of data to demonstrate a more code base connection before mocks of objects"() {
         given:
