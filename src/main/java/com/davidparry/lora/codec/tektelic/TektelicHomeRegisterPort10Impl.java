@@ -6,8 +6,8 @@ import com.davidparry.lora.codec.internal.decoder.Decoder;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class TektelicHomeRegisterImpl implements TektelicHomeRegister {
-    private static final String NAME = "Tektlic Home Sensors version 2.0";
+public class TektelicHomeRegisterPort10Impl implements TektelicHomeRegister {
+    private static final String NAME = "Tektlic Home Sensors Port 10 version 2.0";
     private static Map<Byte, Decoder> decoders = new ConcurrentHashMap<>();
     private static Map<Byte, CayenneType> dataTypes = new ConcurrentHashMap<>();
 
@@ -28,9 +28,6 @@ public class TektelicHomeRegisterImpl implements TektelicHomeRegister {
         dataTypes.put(HUMIDITY.getChannel(), HUMIDITY);
         dataTypes.put(LIGHT_DETECTION.getChannel(), LIGHT_DETECTION);
         dataTypes.put(MAGNETIC_SWITCH.getChannel(), MAGNETIC_SWITCH);
-        dataTypes.put(SAMPLE_PERIOD.getChannel(), SAMPLE_PERIOD);
-        dataTypes.put(MD_THRESHOLD.getChannel(), MD_THRESHOLD);
-        dataTypes.put(MD_STATE.getChannel(), MD_STATE);
     }
 
     private static void initDecoders() {
