@@ -20,12 +20,15 @@ public class TektelicHomeRegisterPort100Impl implements TektelicHomeRegister {
         dataTypes.put(SAMPLE_PERIOD.getChannel(), SAMPLE_PERIOD);
         dataTypes.put(MD_THRESHOLD.getChannel(), MD_THRESHOLD);
         dataTypes.put(MD_STATE.getChannel(), MD_STATE);
+        dataTypes.put(SECONDS_TICK.getChannel(), SECONDS_TICK);
+
     }
 
     private static void initDecoders() {
         decoders.put(SAMPLE_PERIOD.getChannel(), MD_TRANS_DECODER);
         decoders.put(MD_THRESHOLD.getChannel(), MD_TRANS_DECODER);
         decoders.put(MD_STATE.getChannel(), MD_TRANS_DECODER);
+        decoders.put(SECONDS_TICK.getChannel(), TICK_SEC_DECODER);
     }
 
     public Decoder decoder(byte channel) {

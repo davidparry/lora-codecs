@@ -157,6 +157,16 @@ public interface TektelicHomeRegister extends Register {
             .withSigned(true)
             .withSize(1)
             .build();
+    CayenneType SECONDS_TICK = DataType.newBuilder()
+            .withDeciPos(0)
+            .withKey(SensorKey.TICK_SEC)
+            .withLabel("Seconds per Tick")
+            .withChannelX("20")
+            .withChannel((byte) 0x20)
+            .withSigned(false)
+            .withSize(4)
+            .build();
+
 
     Decoder ANALOG_DECODER = new AnalogVoltageDecoder(new DataTypeByteValidator());
     Decoder ACCEL_DECODER = new AccelerometerDecoder();
@@ -165,6 +175,8 @@ public interface TektelicHomeRegister extends Register {
     Decoder HUMIDITY_DECODER = new HumidityDecoder(new DataTypeByteValidator());
     Decoder TEMP_DECODER = new TemperatureDecoder(new DataTypeByteValidator());
     Decoder MD_TRANS_DECODER = new MoistureTransducerDecoder();
+    Decoder TICK_SEC_DECODER = new PeriodicTickDecoder();
+
     /**
      * Name of this register used for display only
      *

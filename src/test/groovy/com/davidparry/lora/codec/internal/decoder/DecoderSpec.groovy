@@ -30,10 +30,14 @@ class DecoderSpec extends Specification {
     byte[] tempRHVoltage = Base64.decodeBase64("A2cBBwRocQD/AS8=")
 
     @Shared
+    byte[] tickSeconds = Base64.decodeBase64("IAAAADw=")
+
+
+
+    @Shared
     DataTypeValidator validator = Mock(DataTypeValidator)
 
     def setup() {
-
 
 
 
@@ -93,6 +97,25 @@ class DecoderSpec extends Specification {
         reedCounterTrueSwitch | new Digital(MAGNETIC_SWITCH, 0) | new Counter(MAGNETIC_SWITCH_COUNT, 1)
 
     }
+
+    def "for read of tick second decode"() {
+        given:
+        PeriodicTickDecoder decoder = new PeriodicTickDecoder()
+        PayloadReader payloadReader = new ByteArrayPayloadReaderReader()
+
+        when:
+        // more in the data temp than RH then Voltage
+        payloadReader.load(tickSeconds)
+        // increment acting like we read the channel to get the decoder and dataType
+        payloadReader.read()
+        Digital tick = decoder.decode(payloadReader, SECONDS_TICK)
+
+
+        then:
+        tick == new Digital(SECONDS_TICK, 60)
+
+    }
+
 
     def "for single pass of data temperature RH and voltage"() {
         given:
