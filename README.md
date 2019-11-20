@@ -26,7 +26,7 @@ where updates to how it encodes or decodes the data is completed when manufactur
 decode or encode payload nothing main deal is to have it simple but easy to add or add too without incurring technical debt.
 
 
-#Little info on LoRaWan
+# LoRaWan Basic 
 LoRaWan is a Specification is a Low Power Wide Area (LPWA) network protocol designed to wirelessly connect battery operated ‘things’ to the internet in regional, national or global networks. The protocol includes features that support low-cost, mobile, and secure bi-directional communication for Internet of Things (IoT).
 Link: https://lora-alliance.org/lorawan-for-developers
 
