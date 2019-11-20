@@ -4,6 +4,17 @@ Master Build CI Status: [![CircleCI](https://circleci.com/gh/davidparry/lora-cod
 # Purpose - Goal
 A single utility jar to use in a Java project to encode and decode LoRaWan Manufactures Payloads.
 
+# Install - Usage
+ Gradle: 
+ ``` 
+ maven {
+  url "http://oss.sonatype.org/content/repositories/snapshots"
+ }
+ dependencies {
+  implementation "com.davidparry:lora-codecs:0.0.1-SNAPSHOT"
+ }
+```
+
 # Driving Design Decisions
 Keep it simple - since it only aims to do one thing well it has no dependencies on other third-party libraries.
 Memory footprint - you will see that most of the classes and data is static. This choice is the nature of the device it self 
